@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Авито Профит — делаем так, чтобы с Авито звонили каждый день</title>
+<meta name="description" content="Продвижение бизнеса на Авито. Упакуем профиль, напишем объявления, настроим показы. Первые обращения — обычно на 3–5 день. Бесплатный разбор аккаунта.">
+
+<!-- ============================================================
+     АВИТО ПРОФИТ · лендинг v2 («живая» версия)
+     Один файл, без зависимостей. Залить на хостинг как index.html.
+     Контакты и цифры клиента помечены TODO.
+     ============================================================ -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;800;900&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --ink:#141414;
+  --gray:#5c6675;
+  --paper:#ffffff;
+  --bg:#f7f5f0;          /* тёплая бумага вместо «холодного корпоратива» */
+  --blue:#0a65ff;
+  --blue-ink:#0846b8;
+  --green:#12a94e;
+  --marker:#ffe94d;      /* жёлтый маркер-выделитель */
+  --line:#e6e1d6;
+  --hand:'Caveat',cursive;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+body{
+  font-family:'Golos Text',sans-serif;
+  background:var(--bg);color:var(--ink);
+  font-size:17px;line-height:1.65;
+}
+.container{max-width:1120px;margin:0 auto;padding:0 24px}
+section{padding:84px 0}
+h1,h2{font-weight:900;line-height:1.12;letter-spacing:-.02em}
+h2{font-size:clamp(28px,3.8vw,42px);margin-bottom:14px}
+.lead{color:var(--gray);font-size:18px;max-width:600px;margin-bottom:44px}
+
+/* маркер-выделение ключевых слов — как жёлтым текстовыделителем */
+.mark{
+  background:linear-gradient(transparent 55%, var(--marker) 55%, var(--marker) 92%, transparent 92%);
+  padding:0 2px;
+}
+/* рукописные пометки */
+.hand{font-family:var(--hand);font-size:1.35em;color:var(--blue);font-weight:700}
+
+/* ---------- кнопки ---------- */
+.btn{
+  display:inline-flex;align-items:center;gap:10px;justify-content:center;
+  font-weight:800;font-size:16px;padding:17px 30px;border-radius:14px;
+  text-decoration:none;border:none;cursor:pointer;font-family:inherit;
+  transition:transform .15s,box-shadow .15s;
+}
+.btn-blue{background:var(--blue);color:#fff;box-shadow:0 8px 0 var(--blue-ink)}
+.btn-blue:hover{transform:translateY(2px);box-shadow:0 6px 0 var(--blue-ink)}
+.btn-blue:active{transform:translateY(6px);box-shadow:0 2px 0 var(--blue-ink)}
+.btn-plain{background:transparent;color:var(--ink);text-decoration:underline;text-underline-offset:5px;padding:17px 10px}
+.btn-plain:hover{color:var(--blue)}
+.btn:focus-visible{outline:3px solid var(--blue-ink);outline-offset:3px}
+
+/* ---------- шапка ---------- */
+header{position:sticky;top:0;z-index:50;background:rgba(247,245,240,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.head{display:flex;align-items:center;justify-content:space-between;max-width:1120px;margin:0 auto;padding:14px 24px}
+.logo{font-weight:900;font-size:21px;text-decoration:none;color:var(--ink);letter-spacing:-.02em}
+.logo b{color:var(--blue)}
+nav ul{display:flex;gap:26px;list-style:none}
+nav a{text-decoration:none;color:var(--gray);font-weight:600;font-size:15px}
+nav a:hover{color:var(--ink)}
+.head .btn{padding:11px 20px;font-size:14px}
+.burger{display:none;font-size:26px;background:none;border:none;cursor:pointer;color:var(--ink)}
+
+/* ---------- хиро ---------- */
+.hero{padding:64px 0 80px;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+.hero h1{font-size:clamp(32px,4.6vw,54px);margin-bottom:20px}
+.hero .sub{font-size:19px;color:var(--gray);margin-bottom:32px;max-width:500px}
+.hero-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.hero-ps{font-size:15px;color:var(--gray)}
+.hero-ps .hand{font-size:1.5em}
+
+/* сигнатура: карточка объявления + входящие сообщения покупателей */
+.phone{
+  background:var(--paper);border:1px solid var(--line);border-radius:26px;
+  box-shadow:0 24px 60px rgba(20,20,20,.12);padding:20px;position:relative;
+  max-width:420px;margin-left:auto;
+}
+.ad-card{border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:16px}
+.ad-photo{height:120px;background:
+  linear-gradient(120deg,#dfe9ff 0%,#c7d9ff 50%,#e8f0ff 100%);
+  display:flex;align-items:center;justify-content:center;color:var(--blue);font-weight:800;font-size:14px;
+  position:relative}
+.ad-photo::after{content:"↑ в топе выдачи";position:absolute;top:10px;left:10px;background:var(--green);
+  color:#fff;font-size:12px;font-weight:700;padding:4px 10px;border-radius:8px}
+.ad-body{padding:14px 16px}
+.ad-title{font-weight:800;font-size:15.5px}
+.ad-price{color:var(--blue);font-weight:900;font-size:18px;margin:2px 0 6px}
+.ad-meta{font-size:12.5px;color:var(--gray);display:flex;gap:12px}
+.ad-meta b{color:var(--ink)}
+/* чат */
+.chat{display:flex;flex-direction:column;gap:10px;min-height:190px}
+.msg{
+  background:#eef3ff;border-radius:14px 14px 14px 4px;padding:10px 14px;
+  font-size:14.5px;max-width:88%;opacity:0;transform:translateY(10px);
+  transition:opacity .4s,transform .4s;
+}
+.msg.show{opacity:1;transform:none}
+.msg .who{font-size:12px;font-weight:700;color:var(--blue);display:block;margin-bottom:2px}
+.msg .time{font-size:11px;color:var(--gray);float:right;margin-left:8px;margin-top:4px}
+.chat-note{
+  position:absolute;top:-16px;right:-8px;background:#ff4d4d;color:#fff;
+  font-weight:900;font-size:14px;min-width:34px;height:34px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(255,77,77,.45);
+}
+.phone-caption{
+  font-family:var(--hand);font-size:22px;color:var(--ink);text-align:center;margin-top:14px;
+  transform:rotate(-1.5deg);
+}
+.phone-caption svg{vertical-align:middle}
+
+/* ---------- «жалобы» — цитаты предпринимателей ---------- */
+.pains{background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.pain-wrap{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start}
+.quote{
+  background:var(--bg);border:1px solid var(--line);border-radius:16px 16px 16px 4px;
+  padding:18px 22px;font-size:16px;max-width:340px;
+}
+.quote .from{font-size:13px;color:var(--gray);margin-top:8px}
+.quote:nth-child(2){transform:rotate(1deg)}
+.quote:nth-child(3){transform:rotate(-1.2deg)}
+.quote:nth-child(5){transform:rotate(.8deg)}
+.pain-answer{margin-top:44px;font-size:20px;max-width:680px}
+.pain-answer b{font-weight:900}
+
+/* ---------- что делаем ---------- */
+.what-list{display:grid;grid-template-columns:1fr 1fr;gap:14px 40px;margin-top:8px}
+.what{display:flex;gap:16px;padding:20px 0;border-bottom:1px dashed var(--line)}
+.what .check{
+  flex-shrink:0;width:34px;height:34px;border-radius:10px;background:var(--blue);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-weight:900;font-size:17px;
+  transform:rotate(-4deg);
+}
+.what h3{font-size:17px;font-weight:800;margin-bottom:4px}
+.what p{font-size:15px;color:var(--gray)}
+.honest{
+  margin-top:48px;background:var(--paper);border:2px dashed var(--blue);border-radius:18px;
+  padding:26px 30px;max-width:760px;font-size:16.5px;
+}
+.honest .hand{display:block;font-size:26px;margin-bottom:6px}
+
+/* ---------- тарифы ---------- */
+.plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.plan{
+  background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:30px 26px;
+  display:flex;flex-direction:column;position:relative;
+}
+.plan.hit{border:2px solid var(--blue)}
+.plan .hit-note{
+  position:absolute;top:-16px;left:24px;font-family:var(--hand);font-size:22px;
+  color:var(--blue);background:var(--bg);padding:0 10px;transform:rotate(-2deg);
+}
+.plan h3{font-size:21px;font-weight:900;margin-bottom:4px}
+.plan .for{font-size:14px;color:var(--gray);margin-bottom:16px}
+.plan .price{font-size:28px;font-weight:900;margin-bottom:20px}
+.plan .price small{font-size:14px;color:var(--gray);font-weight:500}
+.plan ul{list-style:none;flex-grow:1;margin-bottom:24px}
+.plan li{padding:8px 0 8px 28px;font-size:15px;position:relative;border-bottom:1px solid var(--line)}
+.plan li::before{content:"—";position:absolute;left:4px;color:var(--blue);font-weight:900}
+.plan li:last-child{border-bottom:none}
+.plan .btn{width:100%}
+.plans-ps{margin-top:26px;color:var(--gray);font-size:15px}
+
+/* ---------- этапы ---------- */
+.timeline{position:relative;margin-top:44px;padding-left:34px}
+.timeline::before{content:"";position:absolute;left:10px;top:8px;bottom:8px;width:3px;
+  background:repeating-linear-gradient(var(--blue) 0 8px, transparent 8px 16px)}
+.tstep{position:relative;padding:0 0 34px 22px}
+.tstep::before{content:"";position:absolute;left:-31px;top:6px;width:19px;height:19px;
+  border-radius:50%;background:var(--blue);border:4px solid var(--bg)}
+.tstep h3{font-size:18px;font-weight:800}
+.tstep .when{font-family:var(--hand);color:var(--green);font-size:21px;margin-left:8px}
+.tstep p{color:var(--gray);font-size:15.5px;max-width:600px;margin-top:4px}
+
+/* ---------- кейсы ---------- */
+.cases{background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.case-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.case{background:var(--bg);border:1px solid var(--line);border-radius:18px;padding:26px}
+.case .niche{font-size:13px;font-weight:700;color:var(--gray);margin-bottom:12px}
+.case h3{font-size:17px;font-weight:800;margin-bottom:16px;min-height:52px}
+.case .was-now{font-size:15px}
+.case .was-now div{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed var(--line)}
+.case .was-now b{font-weight:800}
+.case .up{margin-top:14px;font-family:var(--hand);font-size:24px;color:var(--green);transform:rotate(-1deg);display:inline-block}
+
+/* ---------- отзывы (в стиле отзывов Авито) ---------- */
+.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:40px}
+.rev{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:24px}
+.rev .top{display:flex;gap:12px;align-items:center;margin-bottom:12px}
+.rev .ava{width:42px;height:42px;border-radius:50%;font-weight:900;color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:15px}
+.rev .top b{display:block;font-size:15px}
+.rev .top span{font-size:12.5px;color:var(--gray)}
+.rev .stars{color:#ffb01f;font-size:14px;letter-spacing:2px;margin-bottom:10px}
+.rev p{font-size:15px;color:#333}
+.rev .tag{display:inline-block;margin-top:12px;font-size:12.5px;background:var(--bg);
+  border:1px solid var(--line);border-radius:8px;padding:4px 10px;color:var(--gray)}
+
+/* ---------- FAQ ---------- */
+.faq{max-width:780px}
+.f-item{border-bottom:1px solid var(--line)}
+.f-q{width:100%;text-align:left;background:none;border:none;cursor:pointer;font-family:inherit;
+  font-weight:800;font-size:17px;color:var(--ink);padding:20px 40px 20px 0;position:relative}
+.f-q::after{content:"+";position:absolute;right:4px;top:16px;font-size:26px;color:var(--blue);transition:transform .2s}
+.f-item.open .f-q::after{transform:rotate(45deg)}
+.f-a{max-height:0;overflow:hidden;transition:max-height .3s;color:var(--gray);font-size:15.5px}
+.f-a p{padding-bottom:20px;max-width:660px}
+.f-item.open .f-a{max-height:320px}
+
+/* ---------- финальный CTA ---------- */
+.final{background:var(--ink);color:#fff;border-radius:28px;margin:0 24px 84px;overflow:hidden}
+.final-in{max-width:1072px;margin:0 auto;padding:70px 48px;display:grid;grid-template-columns:1.05fr .95fr;gap:52px;align-items:center}
+.final h2{color:#fff}
+.final .lead{color:#b9b9b9;margin-bottom:28px}
+.final .hand{color:var(--marker)}
+.mess{display:flex;gap:10px;flex-wrap:wrap}
+.mess a{display:inline-flex;align-items:center;gap:8px;background:#2a2a2a;color:#fff;
+  text-decoration:none;font-weight:700;font-size:15px;padding:13px 20px;border-radius:12px;border:1px solid #3a3a3a}
+.mess a:hover{background:#333;border-color:var(--blue)}
+.form{background:var(--paper);border-radius:20px;padding:32px;color:var(--ink)}
+.form h3{font-size:20px;font-weight:900;margin-bottom:4px}
+.form .hint{font-size:14px;color:var(--gray);margin-bottom:20px}
+.form label{display:block;font-size:13.5px;font-weight:700;margin-bottom:6px}
+.form input,.form select{width:100%;padding:14px 16px;margin-bottom:16px;border:1.5px solid var(--line);
+  border-radius:12px;font-family:inherit;font-size:15.5px;background:var(--bg)}
+.form input:focus,.form select:focus{outline:none;border-color:var(--blue)}
+.form .btn{width:100%}
+.form .legal{font-size:12px;color:var(--gray);margin-top:12px;text-align:center}
+.form-ok{display:none;text-align:center;padding:28px 8px}
+.form-ok .hand{font-size:34px;display:block;margin-bottom:8px}
+
+/* ---------- подвал ---------- */
+footer{padding:0 0 40px;color:var(--gray);font-size:14px}
+.foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+footer a{color:var(--gray)}
+
+/* ---------- появление ---------- */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .55s,transform .55s}
+.rv.on{opacity:1;transform:none}
+
+/* ---------- адаптив ---------- */
+@media(max-width:960px){
+  .hero-grid,.final-in{grid-template-columns:1fr}
+  .phone{margin:0 auto}
+  .what-list{grid-template-columns:1fr}
+  .plans-grid,.case-grid,.reviews-grid{grid-template-columns:1fr}
+  nav{display:none}
+  .burger{display:block}
+  nav.open{display:block;position:absolute;top:100%;left:0;right:0;background:var(--paper);border-bottom:1px solid var(--line);padding:20px 24px}
+  nav.open ul{flex-direction:column;gap:14px}
+  .head .btn{display:none}
+}
+@media(max-width:600px){
+  section{padding:58px 0}
+  .final{margin:0 12px 58px}
+  .final-in{padding:48px 24px}
+  .hero{padding:44px 0 60px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="head">
+    <a class="logo" href="#top">Авито<b>Профит</b></a>
+    <nav id="nav">
+      <ul>
+        <li><a href="#what">Что делаем</a></li>
+        <li><a href="#plans">Цены</a></li>
+        <li><a href="#cases">Кейсы</a></li>
+        <li><a href="#faq">Вопросы</a></li>
+      </ul>
+    </nav>
+    <a href="#lead" class="btn btn-blue">Разобрать мой аккаунт</a>
+    <button class="burger" id="burger" aria-label="Меню">☰</button>
+  </div>
+</header>
+
+<!-- ================= ХИРО ================= -->
+<section class="hero" id="top">
+  <div class="container hero-grid">
+    <div>
+      <h1>Сделаем так, чтобы с Авито <span class="mark">писали и звонили</span>. Каждый день.</h1>
+      <p class="sub">Мы — команда, которая живёт внутри Авито последние 5 лет. Упакуем профиль, перепишем объявления, настроим показы — и перестанем сливать ваш бюджет на «поднятия наугад».</p>
+      <div class="hero-actions">
+        <a href="#lead" class="btn btn-blue">Хочу разбор аккаунта</a>
+        <a href="#cases" class="btn btn-plain">сначала покажите цифры →</a>
+      </div>
+      <p class="hero-ps">Разбор бесплатный. <span class="hand">Серьёзно, без звёздочек*</span></p>
+    </div>
+
+    <!-- Живой блок: объявление в топе + сообщения от покупателей -->
+    <div>
+      <div class="phone" aria-hidden="true">
+        <div class="chat-note" id="unread">0</div>
+        <div class="ad-card">
+          <div class="ad-photo">фото вашего товара / услуги</div>
+          <div class="ad-body">
+            <div class="ad-title">Ремонт квартир под ключ · договор</div>
+            <div class="ad-price">от 4 500 ₽/м²</div>
+            <div class="ad-meta"><span>👁 <b>1 214</b> сегодня</span><span>♡ <b>86</b></span></div>
+          </div>
+        </div>
+        <div class="chat" id="chat">
+          <div class="msg"><span class="who">Сергей</span>Здравствуйте! Ещё актуально? <span class="time">14:02</span></div>
+          <div class="msg"><span class="who">Марина</span>Добрый день, посчитаете двушку 54 м²? <span class="time">14:07</span></div>
+          <div class="msg"><span class="who">Ильдар</span>Можно завтра замерщика? <span class="time">14:11</span></div>
+        </div>
+      </div>
+      <div class="phone-caption">↑ так выглядит ваш Авито после нас</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ЖАЛОБЫ ================= -->
+<section class="pains">
+  <div class="container">
+    <h2>С чем к нам обычно приходят</h2>
+    <p class="lead">Это реальные фразы из первых созвонов с клиентами. Узнаёте себя?</p>
+    <div class="pain-wrap">
+      <div class="quote rv">«Выложил 20 объявлений — тишина. Ну то есть вообще ноль звонков за две недели»<div class="from">— владелец мебельного цеха</div></div>
+      <div class="quote rv">«Включил продвижение, Авито съело 15 тысяч. Заявок — три, и все не по теме»<div class="from">— автосервис</div></div>
+      <div class="quote rv">«Конкурент какой-то мутный, а висит выше меня. Как?!»<div class="from">— ремонт квартир</div></div>
+      <div class="quote rv">«Модерация третий раз отклоняет, причину не пишут»<div class="from">— клининг</div></div>
+      <div class="quote rv">«У меня нет времени в этом ковыряться, мне работать надо»<div class="from">— почти все</div></div>
+    </div>
+    <p class="pain-answer rv">Ничего из этого не значит, что «Авито не работает». Это значит, что <b>площадка стала рекламной системой</b> — со ставками, алгоритмами и поведенческими факторами. И с ней надо работать как с системой. Это мы и делаем.</p>
+  </div>
+</section>
+
+<!-- ================= ЧТО ДЕЛАЕМ ================= -->
+<section id="what">
+  <div class="container">
+    <h2>Что конкретно мы берём на себя</h2>
+    <p class="lead">Без «комплексного синергетического подхода». Вот список работ, по пунктам:</p>
+    <div class="what-list">
+      <div class="what rv"><div class="check">✓</div><div><h3>Разбор аккаунта и конкурентов</h3><p>Смотрим, кто и почему выше вас в выдаче, и где вы теряете клиентов уже сейчас.</p></div></div>
+      <div class="what rv"><div class="check">✓</div><div><h3>Упаковка профиля</h3><p>Оформление магазина, описание, работа с отзывами — чтобы вам верили с первого клика.</p></div></div>
+      <div class="what rv"><div class="check">✓</div><div><h3>Объявления, которые находят</h3><p>Заголовки под реальные запросы людей, тексты без воды, фото в правильном порядке.</p></div></div>
+      <div class="what rv"><div class="check">✓</div><div><h3>Показы без слива бюджета</h3><p>Настраиваем платное продвижение точечно: где нужно — усиливаем, где нет — выключаем.</p></div></div>
+      <div class="what rv"><div class="check">✓</div><div><h3>Ведение и обновления</h3><p>Следим за кампанией каждый день: обновляем, тестируем, реагируем на изменения выдачи.</p></div></div>
+      <div class="what rv"><div class="check">✓</div><div><h3>Отчёт раз в неделю</h3><p>Просмотры, контакты, стоимость заявки — коротко и цифрами, а не «работа ведётся».</p></div></div>
+    </div>
+    <div class="honest rv">
+      <span class="hand">Честно скажем сразу:</span>
+      мы не обещаем «х10 за неделю» и не рисуем красивые графики из воздуха. Обычно первые обращения приходят на 3–5 день, а нормальная статистика собирается за 2–3 недели. Если ваша ниша на Авито не взлетит — скажем об этом на бесплатном разборе, до того как вы заплатите.
+    </div>
+  </div>
+</section>
+
+<!-- ================= ЦЕНЫ ================= -->
+<section id="plans" style="padding-top:0">
+  <div class="container">
+    <h2>Сколько это стоит</h2>
+    <p class="lead">Точную смету считаем после разбора — она зависит от ниши, региона и конкуренции. Но порядок цен такой:</p>
+    <!-- TODO: цены и состав тарифов — уточнить у клиента -->
+    <div class="plans-grid">
+      <div class="plan rv">
+        <h3>Запуск</h3>
+        <div class="for">если хотите вести сами, но стартовать правильно</div>
+        <div class="price">от 15 000 ₽ <small>разово</small></div>
+        <ul>
+          <li>разбор аккаунта и конкурентов</li>
+          <li>упаковка профиля</li>
+          <li>до 10 объявлений</li>
+          <li>настройка показов</li>
+          <li>инструкция, как вести дальше</li>
+        </ul>
+        <a href="#lead" class="btn btn-blue">Обсудить запуск</a>
+      </div>
+      <div class="plan hit rv">
+        <div class="hit-note">берут чаще всего</div>
+        <h3>Под ключ</h3>
+        <div class="for">мы ведём — вы принимаете заявки</div>
+        <div class="price">от 30 000 ₽ <small>/мес</small></div>
+        <ul>
+          <li>всё из «Запуска»</li>
+          <li>до 50 объявлений + обновления</li>
+          <li>ежедневное ведение и ставки</li>
+          <li>работа с отзывами и рейтингом</li>
+          <li>отчёт с цифрами раз в неделю</li>
+        </ul>
+        <a href="#lead" class="btn btn-blue">Хочу под ключ</a>
+      </div>
+      <div class="plan rv">
+        <h3>Масштаб</h3>
+        <div class="for">несколько городов или аккаунтов</div>
+        <div class="price">от 60 000 ₽ <small>/мес</small></div>
+        <ul>
+          <li>100+ объявлений, автопостинг</li>
+          <li>стратегия по каждому региону</li>
+          <li>аналитика до продаж</li>
+          <li>отдельный менеджер на связи</li>
+          <li>скрипты обработки заявок</li>
+        </ul>
+        <a href="#lead" class="btn btn-blue">Обсудить масштаб</a>
+      </div>
+    </div>
+    <p class="plans-ps">Бюджет на показы внутри Авито — отдельно, он платится самой площадке из вашего кабинета. Обычно от 10 000 ₽/мес, все расходы видите сами.</p>
+  </div>
+</section>
+
+<!-- ================= ЭТАПЫ ================= -->
+<section style="padding-top:0">
+  <div class="container">
+    <h2>Как это происходит по дням</h2>
+    <div class="timeline">
+      <div class="tstep rv"><h3>Разбор аккаунта <span class="when">день 1</span></h3><p>Вы кидаете ссылку на профиль — мы присылаем разбор: что не так и какой потенциал у ниши в вашем городе.</p></div>
+      <div class="tstep rv"><h3>План и смета <span class="when">день 1–2</span></h3><p>Созваниваемся на 20 минут, согласуем объём работ, бюджет и цели по заявкам. Фиксируем в договоре.</p></div>
+      <div class="tstep rv"><h3>Упаковка и объявления <span class="when">день 2–4</span></h3><p>Оформляем профиль, пишем и публикуем объявления, проводим через модерацию.</p></div>
+      <div class="tstep rv"><h3>Первые обращения <span class="when">день 3–5</span></h3><p>Включаем показы. Как правило, на этом этапе приходят первые сообщения и звонки.</p></div>
+      <div class="tstep rv"><h3>Оптимизация <span class="when">дальше — постоянно</span></h3><p>Смотрим цифры, усиливаем то, что даёт заявки, отключаем то, что просто жрёт бюджет.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= КЕЙСЫ ================= -->
+<section class="cases" id="cases">
+  <div class="container">
+    <h2>Цифры из кабинетов клиентов</h2>
+    <p class="lead">Первые 30 дней работы. На созвоне покажем скриншоты статистики — тут только сводка.</p>
+    <!-- TODO: заменить на реальные кейсы клиента -->
+    <div class="case-grid">
+      <div class="case rv">
+        <div class="niche">Ремонт квартир · Москва</div>
+        <h3>Аккаунт стоял «мёртвый» полгода</h3>
+        <div class="was-now">
+          <div><span>просмотры</span><b>3 000 → 18 500</b></div>
+          <div><span>обращения</span><b>150 → 742</b></div>
+          <div><span>цена заявки</span><b>620 ₽ → 180 ₽</b></div>
+        </div>
+        <span class="up">заявок ×3 за месяц</span>
+      </div>
+      <div class="case rv">
+        <div class="niche">Кухни на заказ · Казань</div>
+        <h3>Обошли федеральную сеть в выдаче города</h3>
+        <div class="was-now">
+          <div><span>просмотры</span><b>1 200 → 9 400</b></div>
+          <div><span>обращения</span><b>40 → 310</b></div>
+          <div><span>цена заявки</span><b>900 ₽ → 240 ₽</b></div>
+        </div>
+        <span class="up">обращений ×7.7</span>
+      </div>
+      <div class="case rv">
+        <div class="niche">Автосервис · Екатеринбург</div>
+        <h3>Записи закрыты на две недели вперёд</h3>
+        <div class="was-now">
+          <div><span>просмотры</span><b>2 800 → 12 100</b></div>
+          <div><span>обращения</span><b>95 → 405</b></div>
+          <div><span>цена заявки</span><b>410 ₽ → 150 ₽</b></div>
+        </div>
+        <span class="up">+326% записей</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ОТЗЫВЫ ================= -->
+<section>
+  <div class="container">
+    <h2>Отзывы</h2>
+    <!-- TODO: подтянуть реальные отзывы из группы VK клиента -->
+    <div class="reviews-grid">
+      <div class="rev rv">
+        <div class="top"><div class="ava" style="background:#7a5cff">АК</div><div><b>Андрей</b><span>ремонт квартир · работаем 4 мес.</span></div></div>
+        <div class="stars">★★★★★</div>
+        <p>Объявления висели мёртвым грузом, думал уже бросить Авито. После переупаковки звонки пошли на третий день. Работу окупил за первую же неделю, чего вообще не ожидал.</p>
+        <span class="tag">тариф «Под ключ»</span>
+      </div>
+      <div class="rev rv">
+        <div class="top"><div class="ava" style="background:#12a94e">М</div><div><b>Марина</b><span>кухни на заказ · 7 мес.</span></div></div>
+        <div class="stars">★★★★★</div>
+        <p>Больше всего нравится, что каждую неделю присылают отчёт с цифрами и планом. Не «работа ведётся», а конкретно: столько просмотров, столько заявок, столько стоила каждая.</p>
+        <span class="tag">тариф «Под ключ»</span>
+      </div>
+      <div class="rev rv">
+        <div class="top"><div class="ava" style="background:#ff7a45">ДВ</div><div><b>Дмитрий</b><span>автосервис · 3 мес.</span></div></div>
+        <div class="stars">★★★★★</div>
+        <p>Сам пробовал включать продвижение — слил тысяч пятнадцать впустую. Тут настроили ставки по-человечески: заявок стало больше, а трачу на рекламу вдвое меньше.</p>
+        <span class="tag">тариф «Запуск» → «Под ключ»</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section id="faq" style="padding-top:0">
+  <div class="container faq">
+    <h2>Вопросы, которые задают все</h2>
+    <div style="margin-top:28px">
+      <div class="f-item">
+        <button class="f-q">Когда пойдут первые заявки?</button>
+        <div class="f-a"><p>Обычно на 3–5 день после запуска, когда объявления пройдут модерацию и наберут показы. Бывает быстрее, бывает дольше — зависит от ниши. Прогноз по вашей дадим на разборе.</p></div>
+      </div>
+      <div class="f-item">
+        <button class="f-q">Аккаунт останется у меня?</button>
+        <div class="f-a"><p>Да, всегда. Работаем в вашем кабинете, вы видите всю статистику, расходы и переписки. Никаких «наших» аккаунтов, которые потом исчезают вместе с исполнителем.</p></div>
+      </div>
+      <div class="f-item">
+        <button class="f-q">Сколько закладывать на рекламу внутри Авито?</button>
+        <div class="f-a"><p>Обычно от 10 000 ₽ в месяц, но сильно зависит от ниши и города. Эти деньги платятся напрямую Авито из вашего кабинета — мы к ним не прикасаемся, только управляем ставками.</p></div>
+      </div>
+      <div class="f-item">
+        <button class="f-q">У меня очень конкурентная ниша, есть смысл?</button>
+        <div class="f-a"><p>Чаще всего — да, именно там больше всего денег. Выигрывают не самые богатые, а те, у кого сильнее оффер и лучше поведенческие факторы. Но если увидим, что ловить нечего — скажем прямо на разборе.</p></div>
+      </div>
+      <div class="f-item">
+        <button class="f-q">А гарантии?</button>
+        <div class="f-a"><p>В договоре фиксируем объём работ и цели по показам и обращениям. Каждую неделю отчитываемся цифрами. Если связка не работает — перестраиваем стратегию за свой счёт, а не разводим руками.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ФИНАЛЬНЫЙ CTA ================= -->
+<div class="final" id="lead">
+  <div class="final-in">
+    <div>
+      <h2>Пришлите ссылку на ваш Авито — <span class="hand">разберём бесплатно</span></h2>
+      <p class="lead">Посмотрим аккаунт и конкурентов, посчитаем потенциал ниши и скажем честно: что чинить и есть ли вообще смысл. Без обязательств и без спама потом.</p>
+      <div class="mess">
+        <!-- TODO: заменить на реальные контакты клиента -->
+        <a href="https://wa.me/70000000000" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="https://t.me/avitoprofit" target="_blank" rel="noopener">Telegram</a>
+        <a href="https://vk.ru/avitoprofit1" target="_blank" rel="noopener">ВКонтакте</a>
+      </div>
+    </div>
+    <form class="form" id="leadForm" novalidate>
+      <h3>Или оставьте контакт</h3>
+      <p class="hint">Перезвоним или напишем в течение 15 минут в рабочее время</p>
+      <label for="fName">Как вас зовут</label>
+      <input id="fName" name="name" type="text" placeholder="Иван" required>
+      <label for="fPhone">Телефон или ник в Telegram</label>
+      <input id="fPhone" name="phone" type="tel" placeholder="+7 900 000-00-00" required>
+      <label for="fNiche">Что продвигаем</label>
+      <select id="fNiche" name="niche">
+        <option>Услуги</option><option>Товары</option><option>Недвижимость</option><option>Авто</option><option>Другое</option>
+      </select>
+      <button type="submit" class="btn btn-blue">Получить разбор</button>
+      <p class="legal">Нажимая кнопку, вы соглашаетесь с политикой обработки персональных данных</p>
+      <div class="form-ok" id="formOk">
+        <span class="hand">Заявка у нас!</span>
+        Напишем вам в ближайшие 15 минут.
+      </div>
+    </form>
+  </div>
+</div>
+
+<footer>
+  <div class="container foot">
+    <a class="logo" href="#top">Авито<b>Профит</b></a>
+    <div>© 2026 Авито Профит · <a href="#">Политика конфиденциальности</a></div>
+  </div>
+</footer>
+
+<script>
+/* меню */
+const burger=document.getElementById('burger'),nav=document.getElementById('nav');
+burger.addEventListener('click',()=>nav.classList.toggle('open'));
+nav.addEventListener('click',e=>{if(e.target.tagName==='A')nav.classList.remove('open')});
+
+/* FAQ */
+document.querySelectorAll('.f-q').forEach(b=>b.addEventListener('click',()=>b.parentElement.classList.toggle('open')));
+
+/* появление при скролле */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+/* сообщения покупателей появляются по очереди, бейдж непрочитанных растёт */
+const msgs=document.querySelectorAll('.msg'),badge=document.getElementById('unread');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(reduce){msgs.forEach(m=>m.classList.add('show'));badge.textContent=msgs.length;}
+else{
+  msgs.forEach((m,i)=>setTimeout(()=>{m.classList.add('show');badge.textContent=i+1;},900+i*1400));
+}
+
+/* форма — прототип: показывает успех без отправки.
+   На бою подключить: PHP mail()/SMTP на хостинге или Telegram Bot API. */
+document.getElementById('leadForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  if(!this.name.value.trim()||!this.phone.value.trim()){alert('Заполните имя и контакт, пожалуйста');return}
+  [...this.children].forEach(el=>{if(el.id!=='formOk')el.style.display='none'});
+  document.getElementById('formOk').style.display='block';
+});
+</script>
+</body>
+</html>
