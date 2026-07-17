@@ -89,21 +89,24 @@ nav a:hover{color:var(--txt)}
 .hn span{font-size:13.5px;color:var(--mut)}
 .hero-photo{position:relative}
 .hero-photo .frame{border-radius:26px;overflow:hidden;border:1px solid var(--line);
-  box-shadow:0 40px 90px rgba(0,0,0,.55)}
-.hero-photo img{width:100%;height:auto}
-.chip{position:absolute;background:var(--panel);border:1px solid var(--line);border-radius:14px;
-  padding:12px 16px;font-size:14px;font-weight:600;box-shadow:0 16px 40px rgba(0,0,0,.5);white-space:nowrap}
+  box-shadow:0 40px 90px rgba(0,0,0,.55);aspect-ratio:2/3;background:var(--panel2)}
+.hero-photo img,.hero-photo video{width:100%;height:100%;object-fit:cover}
+.chip{position:absolute;background:rgba(18,21,29,.85);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:12px;
+  padding:10px 14px;font-size:13.5px;font-weight:600;box-shadow:0 14px 34px rgba(0,0,0,.45);white-space:nowrap;z-index:2}
 .chip b{color:var(--green)}
-.chip.c1{top:26px;left:-42px;animation:float 4s ease-in-out infinite}
-.chip.c2{bottom:88px;right:-30px;animation:float 5s .8s ease-in-out infinite}
-.chip.c3{bottom:-16px;left:-24px;animation:float 4.5s .4s ease-in-out infinite}
+.chip.c1{top:22px;left:-18px;animation:float 4s ease-in-out infinite}
+.chip.c2{top:45%;right:-18px;animation:float 5s .8s ease-in-out infinite}
+.chip.c3{bottom:26px;left:-18px;animation:float 4.5s .4s ease-in-out infinite}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 
 /* лента */
-.strip{padding:60px 0;overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.strip-track{display:flex;gap:16px;width:max-content;animation:marquee 42s linear infinite}
+.strip{padding:52px 0;overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);position:relative}
+.strip::before,.strip::after{content:"";position:absolute;top:0;bottom:0;width:160px;z-index:2;pointer-events:none}
+.strip::before{left:0;background:linear-gradient(90deg,var(--bg),transparent)}
+.strip::after{right:0;background:linear-gradient(270deg,var(--bg),transparent)}
+.strip-track{display:flex;gap:14px;width:max-content;animation:marquee 42s linear infinite}
 .strip:hover .strip-track{animation-play-state:paused}
-.strip-item{width:220px;height:280px;border-radius:18px;overflow:hidden;border:1px solid var(--line);flex-shrink:0}
+.strip-item{width:190px;height:244px;border-radius:16px;overflow:hidden;border:1px solid var(--line);flex-shrink:0}
 .strip-item img,.strip-item video{width:100%;height:100%;object-fit:cover}
 @keyframes marquee{to{transform:translateX(-50%)}}
 
@@ -116,11 +119,13 @@ nav a:hover{color:var(--txt)}
 .need .a b{color:var(--green)}
 
 /* счётчики */
-.counters{background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.cnt-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center}
-.cnt b{font-family:var(--fd);font-weight:900;font-size:clamp(30px,4vw,48px);display:block;
+.counters{background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:64px 0}
+.cnt-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;text-align:center}
+.cnt{padding:6px 26px;border-left:1px solid var(--line)}
+.cnt:first-child{border-left:none}
+.cnt b{font-family:var(--fd);font-weight:900;font-size:clamp(28px,3.6vw,44px);display:block;margin-bottom:10px;
   background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-.cnt span{color:var(--mut);font-size:14.5px}
+.cnt span{display:block;color:var(--mut);font-size:14px;line-height:1.5;max-width:230px;margin:0 auto}
 
 /* программа */
 .mods{max-width:860px}
@@ -146,9 +151,9 @@ nav a:hover{color:var(--txt)}
 /* доказательства */
 .proof{background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .proof-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;align-items:start}
-.shot{border-radius:22px;overflow:hidden;border:1px solid var(--line);background:var(--panel2)}
-.shot img{width:100%}
-.shot-cap{padding:14px 18px;font-size:14px;color:var(--mut);border-top:1px solid var(--line)}
+.shot{border-radius:22px;overflow:hidden;border:1px solid var(--line);background:var(--panel2);display:flex;flex-direction:column}
+.shot img{width:100%;height:430px;object-fit:cover;object-position:top center}
+.shot-cap{padding:16px 18px;font-size:14px;color:var(--mut);border-top:1px solid var(--line);margin-top:auto}
 .shot-cap b{color:var(--txt);display:block;font-size:15px}
 
 /* этапы */
@@ -193,8 +198,7 @@ nav a:hover{color:var(--txt)}
 .soc{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:30px;text-decoration:none;color:var(--txt);
   transition:transform .15s,border-color .2s;display:block}
 .soc:hover{transform:translateY(-4px);border-color:var(--violet)}
-.soc .ic{width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;
-  font-weight:900;font-size:19px;color:#fff;margin-bottom:18px}
+.soc .ic{width:52px;height:52px;border-radius:16px;margin-bottom:18px;display:block}
 .soc h3{font-size:18px;font-weight:800;margin-bottom:8px;font-family:var(--fb)}
 .soc p{font-size:14.5px;color:var(--mut)}
 .soc .go{display:inline-block;margin-top:16px;font-weight:700;font-size:14.5px;color:var(--violet)}
@@ -243,10 +247,12 @@ footer{padding:38px 0;border-top:1px solid var(--line);color:var(--mut);font-siz
 @media(max-width:980px){
   .hero-grid,.final-grid,.author-grid{grid-template-columns:1fr}
   .hero-photo{max-width:420px;margin:0 auto}
-  .chip.c1{left:-8px}.chip.c2{right:-8px}.chip.c3{left:-8px}
+  .chip{font-size:12.5px;padding:8px 12px}
+  .chip.c1{left:10px}.chip.c2{right:10px}.chip.c3{left:10px}
   .need-grid,.plans-grid,.soc-grid{grid-template-columns:1fr}
   .proof-grid{grid-template-columns:1fr 1fr}
-  .cnt-grid{grid-template-columns:1fr 1fr}
+  .cnt-grid{grid-template-columns:1fr 1fr;gap:22px}
+  .cnt{border-left:none;padding:0 8px}
   nav{display:none}
   .burger{display:block}
   nav.open{display:block;position:absolute;top:100%;left:0;right:0;background:var(--panel);border-bottom:1px solid var(--line);padding:20px 24px}
@@ -272,7 +278,7 @@ footer{padding:38px 0;border-top:1px solid var(--line);color:var(--mut);font-siz
     <nav id="nav">
       <ul>
         <li><a href="#program">Программа</a></li>
-        <li><a href="#proof">Результаты</a></li>
+        <li><a href="#proof">Отзывы</a></li>
         <li><a href="#author">Автор</a></li>
         <li><a href="#plans">Тарифы</a></li>
         <li><a href="#faq">FAQ</a></li>
@@ -288,7 +294,7 @@ footer{padding:38px 0;border-top:1px solid var(--line);color:var(--mut);font-siz
   <div class="container hero-grid">
     <div>
       <span class="kicker">Курс «Avito Pro» · Самат Назиров</span>
-      <h1>Открой свой магазин на Avito — <span class="grad-text">с нуля до первых продаж</span></h1>
+      <h1>Открой свой магазин на Avito: <span class="grad-text">с нуля до первых продаж</span></h1>
       <p class="sub">Пошаговая система: как устроены алгоритмы, как собрать объявление, которое находят, и как автоматизировать продажи, чтобы Avito работал на вас — а не наоборот.</p>
       <div class="hero-actions">
         <a href="#plans" class="btn btn-grad">Выбрать тариф</a>
@@ -296,15 +302,15 @@ footer{padding:38px 0;border-top:1px solid var(--line);color:var(--mut);font-siz
       </div>
       <div class="hero-nums">
         <div class="hn"><b>7</b><span>модулей + бонус<br>по нишам</span></div>
-        <div class="hn"><b>от 5 900 ₽</b><span>рассрочка<br>от 590 ₽/мес</span></div>
-        <div class="hn"><b>диплом</b><span>защита своей<br>стратегии</span></div>
+        <div class="hn"><b>30+</b><span>уроков, чек-листов<br>и шаблонов</span></div>
+        <div class="hn"><b>от 590 ₽</b><span>в месяц<br>в рассрочку</span></div>
       </div>
     </div>
     <div class="hero-photo rv on">
-      <div class="frame"><img src="assets/hero.webp" alt="Самат Назиров — автор курса Avito Pro" fetchpriority="high"></div>
+      <div class="frame"><video src="assets/hero.mp4" poster="assets/hero-poster.webp" autoplay muted loop playsinline aria-label="Самат Назиров — автор курса Avito Pro"></video></div>
       <div class="chip c1">👁 Просмотры <b>+612%</b></div>
-      <div class="chip c2">💬 Новое сообщение: «Ещё актуально?»</div>
-      <div class="chip c3">✅ Оплата получена <b>24 900 ₽</b></div>
+      <div class="chip c2">💬 3 новых сообщения</div>
+      <div class="chip c3">✅ Оплата <b>24 900 ₽</b></div>
     </div>
   </div>
 </section>
@@ -313,17 +319,12 @@ footer{padding:38px 0;border-top:1px solid var(--line);color:var(--mut);font-siz
 <div class="strip" aria-hidden="true">
   <div class="strip-track" id="stripTrack">
     <div class="strip-item"><img src="assets/strip1.webp" alt="" loading="lazy"></div>
-    <div class="strip-item"><video src="assets/reel.mp4" autoplay muted loop playsinline></video></div>
-    <div class="strip-item"><img src="assets/strip2.webp" alt="" loading="lazy"></div>
-    <div class="strip-item"><img src="assets/proof1.webp" alt="" loading="lazy"></div>
     <div class="strip-item"><img src="assets/strip3.webp" alt="" loading="lazy"></div>
-    <div class="strip-item"><img src="assets/strip4.webp" alt="" loading="lazy"></div>
-    <div class="strip-item"><img src="assets/proof2.webp" alt="" loading="lazy"></div>
     <div class="strip-item"><img src="assets/strip5.webp" alt="" loading="lazy"></div>
     <div class="strip-item"><img src="assets/strip6.webp" alt="" loading="lazy"></div>
-    <div class="strip-item"><img src="assets/proof3.webp" alt="" loading="lazy"></div>
+    <div class="strip-item"><img src="assets/strip2.webp" alt="" loading="lazy"></div>
+    <div class="strip-item"><img src="assets/strip4.webp" alt="" loading="lazy"></div>
     <div class="strip-item"><img src="assets/strip7.webp" alt="" loading="lazy"></div>
-    <div class="strip-item"><img src="assets/strip8.webp" alt="" loading="lazy"></div>
   </div>
 </div>
 
@@ -363,7 +364,7 @@ footer{padding:38px 0;border-top:1px solid var(--line);color:var(--mut);font-siz
   <div class="container cnt-grid">
     <div class="cnt rv"><b data-count="7">0</b><span>модулей — от алгоритмов до автоматизации</span></div>
     <div class="cnt rv"><b data-count="30" data-suffix="+">0</b><span>уроков, чек-листов и шаблонов</span></div>
-    <div class="cnt rv"><b data-count="3" data-suffix=" тарифа">0</b><span>от самостоятельного до личного наставничества</span></div>
+    <div class="cnt rv"><b data-count="3">0</b><span>тарифа — от самостоятельного до личного наставничества</span></div>
     <div class="cnt rv"><b data-count="100" data-suffix="+">0</b><span>объявлений — уровень, к которому ведёт модуль автоматизации</span></div>
   </div>
 </section>
@@ -452,13 +453,13 @@ footer{padding:38px 0;border-top:1px solid var(--line);color:var(--mut);font-siz
 <!-- ================= РЕЗУЛЬТАТЫ ================= -->
 <section class="proof" id="proof">
   <div class="container">
-    <span class="kicker">Результаты</span>
-    <h2>Цифры из кабинета, а не из презентаций</h2>
-    <p class="lead">Скриншоты — из реальной работы автора на Avito. На курсе показываем, как приходить к таким же.</p>
+    <span class="kicker">Отзывы</span>
+    <h2>Что говорят ученики — скриншоты, а не цитаты</h2>
+    <p class="lead">Отзывы приходят Самату в канал — текстом и голосом. Вот несколько прямо из Telegram, без ретуши.</p>
     <div class="proof-grid">
-      <div class="shot rv"><img src="assets/proof1.webp" alt="Скриншот кабинета Avito: активные объявления" loading="lazy"><div class="shot-cap"><b>Живой магазин</b>объявления, которые находят и покупают</div></div>
-      <div class="shot rv"><img src="assets/proof2.webp" alt="Скриншот кабинета Avito: продажи" loading="lazy"><div class="shot-cap"><b>Продажи, а не просмотры</b>сделки закрываются в переписке — по скриптам из модуля 4</div></div>
-      <div class="shot rv"><img src="assets/proof3.webp" alt="Скриншот статистики Avito" loading="lazy"><div class="shot-cap"><b>Статистика роста</b>динамика, которую даёт системная работа с алгоритмом</div></div>
+      <div class="shot rv"><img src="assets/proof1.webp" alt="Отзыв ученика в Telegram-канале АвитоПрофит" loading="lazy"><div class="shot-cap"><b>«От старта до первых денег — 2,5 недели»</b>отзыв ученика из канала АвитоПрофит</div></div>
+      <div class="shot rv"><img src="assets/proof2.webp" alt="Голосовой отзыв ученика с расшифровкой" loading="lazy"><div class="shot-cap"><b>Первая бронь на 60 000 ₽</b>голосовой отзыв: сделка закрыта по советам с курса</div></div>
+      <div class="shot rv"><img src="assets/proof3.webp" alt="Подборка отзывов учеников курса" loading="lazy"><div class="shot-cap"><b>Результаты учеников — до 128 000 ₽</b>подборка отзывов о курсе «АвитоПрофит»</div></div>
     </div>
   </div>
 </section>
@@ -487,10 +488,9 @@ footer{padding:38px 0;border-top:1px solid var(--line);color:var(--mut);font-siz
       <h2>Самат Назиров</h2>
       <p>Практик, который сам продаёт на Avito каждый день — от частных объявлений до магазинов с сотнями позиций. Всё, что есть в курсе, <b>сначала проверено на собственных продажах</b>, и только потом попало в программу.</p>
       <div class="afacts">
-        <!-- TODO: уточнить у Самата точные цифры для этих трёх фактов -->
-        <div class="afact rv">Ведёт каналы для продавцов на Avito: разборы, фишки, ответы на вопросы</div>
-        <div class="afact rv">Работает с нишами от товаров из дома до недвижимости и авто</div>
-        <div class="afact rv">Учит на реальных кабинетах, а не на слайдах</div>
+        <div class="afact rv">Опыт работы с Avito — 5+ лет</div>
+        <div class="afact rv">Обучил 500+ учеников</div>
+        <div class="afact rv">Создал 3 магазина на Avito с нуля</div>
       </div>
       <a href="#plans" class="btn btn-grad">Учиться у Самата</a>
     </div>
@@ -562,19 +562,19 @@ footer{padding:38px 0;border-top:1px solid var(--line);color:var(--mut);font-siz
     <p class="lead">Не готовы к курсу — подпишитесь: Самат публикует разборы, фишки алгоритмов и ответы на вопросы продавцов.</p>
     <div class="soc-grid">
       <a class="soc rv" href="https://t.me/avitoprofit1" target="_blank" rel="noopener">
-        <div class="ic" style="background:#229ED9">TG</div>
+        <img class="ic" src="assets/tg.svg" alt="Telegram" width="52" height="52">
         <h3>Telegram-канал</h3>
         <p>Короткие разборы и фишки продвижения — самое оперативное место.</p>
         <span class="go">t.me/avitoprofit1 →</span>
       </a>
       <a class="soc rv" href="https://vk.ru/avitoprofit1" target="_blank" rel="noopener">
-        <div class="ic" style="background:#0077FF">VK</div>
+        <img class="ic" src="assets/vk.svg" alt="ВКонтакте" width="52" height="52">
         <h3>Группа ВКонтакте</h3>
         <p>Кейсы, истории клиентов и обсуждения в комментариях.</p>
         <span class="go">vk.ru/avitoprofit1 →</span>
       </a>
       <a class="soc rv" href="https://max.ru/join/qCsozWjkHnis-g0L0xN2q4CEl4y96EBpFeCqGRkL0Ag" target="_blank" rel="noopener">
-        <div class="ic" style="background:linear-gradient(120deg,#7a5cff,#b45cff)">MAX</div>
+        <img class="ic" src="assets/max.svg" alt="MAX" width="52" height="52">
         <h3>Канал в MAX</h3>
         <p>Тот же полезный контент — если вам удобнее в MAX.</p>
         <span class="go">присоединиться →</span>
